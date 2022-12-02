@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>my game</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-image: url(BG.webp);
+        background-repeat: repeat-x;
+      }
+      .header {
+        text-align: center;
+        /* margin-top: 100px; */
+        font-size: 80px;
+      }
+      .btn {
+        padding: 10px;
+        width: 100px;
+        background-color: white;
+        font-size: 25px;
+        margin-left: 50px;
+        border-radius: 10px;
+      }
+      .text {
+        font-size: 30px;
+        margin-left: 1010px;
+      }
+      .exe {
+        font-size: 70px;
+        text-align: center;
+        color: black;
+      }
+      .guess {
+        padding: 30px;
+        margin: 30px;
+      }
+      #vox {
+        margin-left: 30px;
+      }
+      .message {
+        margin-left: 1010px;
+      }
+      .set {
+        margin-left: 1010px;
+        margin-top: -50px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="header">Guess My number !</h1>
+      <p class="text">(Between 1 to 20)</p>
+      <div class="reset">
+        <button class="btn">Again</button>
+      </div>
+      <div class="exe">?</div>
+    </header>
+    <section>
+      <h3 class="message">Start Guessing......</h3>
+      <input class="guess" type="number" /><br />
+      <button class="btn check" id="vox">Check!</button>
+      <div class="set">
+        <h4>score : <span class="score">20</span></h4>
+
+        <h4>HighestScore : <span class="heighScore">0</span></h4>
+      </div>
+    </section>
+  </body>
+  <script>
+    //to get a redom number
+    let secretNumber = Math.trunc(Math.random() * 20) + 1;
+    //attemp which is done by player
+    let score = 5;
+    let heighScore = 0;
+    //to guess a number
+    document.querySelector(".check").addEventListener("click", function () {
+      const guess = Number(document.querySelector(".guess").value);
+      console.log(guess, typeof guess);
+      //check the conditon when input is empty
+      if (!guess) {
+        document.querySelector(".message").textContent = "No number";
+      } //check the conditon when number is correct
+      else if (guess === secretNumber) {
+        document.querySelector(".message").textContent = "correct Number!";
+        document.querySelector(".exe").textContent = secretNumber;
+        if (score > heighScore) {
+          heighScore = score;
+          document.querySelector(".heighScore").textContent = heighScore;
+        } //check the conditon when the numberis higher then random number
+      } else if (guess > secretNumber)
+        if (score > 1) {
+          document.querySelector(".message").textContent = "Too high";
+          score--;
+          document.querySelector(".score").textContent = score;
+        } else {
+          document.querySelector(".message").textContent =
+            "you lose the Game😥 ";
+          document.querySelector(".score").textContent = 0;
+        }
+      //check the conditon when the numberis lower then random number
+      else if (guess < secretNumber) {
+        if (score > 1) {
+          document.querySelector(".message").textContent = "Too low";
+          score--;
+          document.querySelector(".score").textContent = score;
+        } else {
+          document.querySelector(".message").textContent =
+            "you lose the Game :( ";
+          document.querySelector(".score").textContent = 0;
+        }
+      }
+    });
+    //to set the Again button
+    document.querySelector(".reset").addEventListener("click", function () {
+      score = 5;
+      let secretNumber = Math.trunc(Math.random() * 20) + 1;
+      document.querySelector(".message").textContent = "Start Guessing.....";
+      document.querySelector(".score").textContent = score;
+      document.querySelector(".exe").textContent = "?";
+      document.querySelector(".guess").textContent = " ";
+    });
+  </script>
+</html>
